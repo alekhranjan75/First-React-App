@@ -40,10 +40,18 @@ class App extends Component {
         })
     }
     render() {
+        //Inline CSS for Button
+        const butStyle = {
+            backgroundColor: "blue",
+            font: 'inherit',
+            border: '2px solid black',
+            padding: '10px',
+            cursor: 'pointer'
+        };
         return ( 
         <div className = "App" >
             <h1 > Hi I'm React</h1> 
-            < button onClick = {() => this.detailsHandeler("Name1", "Name2", "Name3")} > Change Details </button>
+            < button  style = {butStyle} onClick = {() => this.detailsHandeler("Name1", "Name2", "Name3")} > Change Details </button>
 
             < Person name = {this.state.persons[0].name} age = {this.state.persons[0].age} changed ={this.inputHandler}/>
 

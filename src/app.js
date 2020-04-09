@@ -10,15 +10,16 @@ class App extends Component {
             { name: "Maxmin", age: 30 }
         ]
     }
-    detailsHandeler = (p1Name) => {
+    detailsHandeler = (p1, p2, p3) => {
         this.setState({
             persons: [
-            { name: p1Name, age: 28 },
-            { name: "Minimum", age: 29 }, 
-            { name: "Maxiumminium", age: 30 }
+            { name: p1, age: 28 },
+            { name: p2, age: 29 }, 
+            { name: p3, age: 30 }
             ]
         })
     }
+    
     specificPersonHandler = (p2Name) => {
         this.setState({
             persons: [
@@ -28,13 +29,26 @@ class App extends Component {
             ]
         })
     }
+
+    inputHandler = (event) => {
+        this.setState({
+            persons: [
+            { name: event.target.value, age: 28 },
+            { name: "Manu", age: 29 }, 
+            { name: "Maxmin", age: 30 }
+            ]
+        })
+    }
     render() {
         return ( 
         <div className = "App" >
-            <h1 > Hi I 'm React</h1> 
-            <button  onClick = {() => this.detailsHandeler("LLLLLLLLLLL")}>Change Details</button>
-            < Person name = {this.state.persons[0].name} age = {this.state.persons[0].age} />
+            <h1 > Hi I'm React</h1> 
+            < button onClick = {() => this.detailsHandeler("Name1", "Name2", "Name3")} > Change Details </button>
+
+            < Person name = {this.state.persons[0].name} age = {this.state.persons[0].age} changed ={this.inputHandler}/>
+
             < Person name = {this.state.persons[1].name} age = {this.state.persons[1].age} clicked = {this.specificPersonHandler.bind(this, "Changed Manu")} >My hobby is Singing</ Person>
+            
             < Person name = {this.state.persons[2].name} age = {this.state.persons[2].age} />
         </div>
         );

@@ -8,7 +8,9 @@ class App extends Component {
             { name: "Max", age: 28 },
             { name: "Min", age: 29 }, 
             { name: "Maxmin", age: 30 }
-        ]
+        ],
+        someOtherState: "Some Value",
+        showPersons: false
     }
     detailsHandeler = (p1, p2, p3) => {
         this.setState({
@@ -39,6 +41,10 @@ class App extends Component {
             ]
         })
     }
+    toggleHandler = () => {
+        // const doesShow = this.state.showPersons;
+        this.setState({showPersons: !this.state.showPersons});
+    }
     render() {
         //Inline CSS for Button
         const butStyle = {
@@ -46,18 +52,25 @@ class App extends Component {
             font: 'inherit',
             border: '2px solid black',
             padding: '10px',
-            cursor: 'pointer'
+            cursor: 'pointer',
+            margin: "20px auto",
         };
+
         return ( 
         <div className = "App" >
             <h1 > Hi I'm React</h1> 
-            < button  style = {butStyle} onClick = {() => this.detailsHandeler("Name1", "Name2", "Name3")} > Change Details </button>
+            <button onClick = {this.toggleHandler}>Toggle Persons</button>
+            {   this.state.showPersons ? //Ternary operator to toggle
+                <div>
+                    < button  style = {butStyle} onClick = {() => this.detailsHandeler("Name1", "Name2", "Name3")} > Change Details </button>
 
-            < Person name = {this.state.persons[0].name} age = {this.state.persons[0].age} changed ={this.inputHandler}/>
+                    < Person name = {this.state.persons[0].name} age = {this.state.persons[0].age} changed ={this.inputHandler}/>
 
-            < Person name = {this.state.persons[1].name} age = {this.state.persons[1].age} clicked = {this.specificPersonHandler.bind(this, "Changed Manu")} >My hobby is Singing</ Person>
-            
-            < Person name = {this.state.persons[2].name} age = {this.state.persons[2].age} />
+                    < Person name = {this.state.persons[1].name} age = {this.state.persons[1].age} clicked = {this.specificPersonHandler.bind(this, "Changed Manu")} >My hobby is Singing</ Person>
+                    
+                    < Person name = {this.state.persons[2].name} age = {this.state.persons[2].age} />
+                </div> : null
+            }
         </div>
         );
     }

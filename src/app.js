@@ -55,12 +55,30 @@ class App extends Component {
             cursor: 'pointer',
             margin: "20px auto",
         };
+        let personsView = null;
+        if (this.state.showPersons) {
+            personsView = (
+            <div>
+                {
+                    this.state.persons.map(person => {
+                        return <Person name = {person.name} age = {person.age}/>
+                    })
+                /* < button  style = {butStyle} onClick = {() => this.detailsHandeler("Name1", "Name2", "Name3")} > Change Details </button>
+
+                < Person name = {this.state.persons[0].name} age = {this.state.persons[0].age} changed ={this.inputHandler}/>
+
+                < Person name = {this.state.persons[1].name} age = {this.state.persons[1].age} clicked = {this.specificPersonHandler.bind(this, "Changed Manu")} >My hobby is Singing</ Person>
+                
+                < Person name = {this.state.persons[2].name} age = {this.state.persons[2].age} /> */}                
+            </div>
+            )
+        }
 
         return ( 
         <div className = "App" >
             <h1 > Hi I'm React</h1> 
             <button onClick = {this.toggleHandler}>Toggle Persons</button>
-            {   this.state.showPersons ? //Ternary operator to toggle
+            {/* {   this.state.showPersons ? //Ternary operator to toggle
                 <div>
                     < button  style = {butStyle} onClick = {() => this.detailsHandeler("Name1", "Name2", "Name3")} > Change Details </button>
 
@@ -70,7 +88,8 @@ class App extends Component {
                     
                     < Person name = {this.state.persons[2].name} age = {this.state.persons[2].age} />
                 </div> : null
-            }
+            } */}
+            {personsView}
         </div>
         );
     }

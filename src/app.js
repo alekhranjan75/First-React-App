@@ -5,13 +5,14 @@ import Person from './Person/Person.js';
 class App extends Component {
     state = {
         persons: [
-            { name: "Max", age: 28 },
-            { name: "Min", age: 29 }, 
-            { name: "Maxmin", age: 30 }
+            { id: "p1", name: "Max", age: 28 },
+            { id: "p2", name: "Min", age: 29 }, 
+            { id: "p3", name: "Maxmin", age: 30 }
         ],
         someOtherState: "Some Value",
         showPersons: false
     }
+
     detailsHandeler = (p1, p2, p3) => {
         this.setState({
             persons: [
@@ -22,6 +23,15 @@ class App extends Component {
         })
     }
     
+    deletePerson = (index) => {
+        //Creating a copy of the original State
+        const persons = [...this.state.persons];
+        //Removing the current index person
+        persons.splice(index, 1)
+        //Updatingthe state
+        this.setState({persons: persons})
+    }
+
     specificPersonHandler = (p2Name) => {
         this.setState({
             persons: [
@@ -32,15 +42,22 @@ class App extends Component {
         })
     }
 
-    inputHandler = (event) => {
-        this.setState({
-            persons: [
-            { name: event.target.value, age: 28 },
-            { name: "Manu", age: 29 }, 
-            { name: "Maxmin", age: 30 }
-            ]
-        })
+    inputHandler = (event, id) => {
+        console.log("Input Handler Invoked")
+        //Finding the index with the specific id
+        const personIndex = this.state.persons.findIndex(p => p.id === id)
+        //Storing details of that persons
+        const person = this.state.persons[personIndex]
+        //Changingthe name attribute of the person
+        person.name = event.target.value
+        //Creatinga copy of the original state
+        const persons = [...this.state.persons]
+        //Updating the value in the new array
+        persons[personIndex] = person
+
+        this.setState({persons: persons })
     }
+
     toggleHandler = () => {
         // const doesShow = this.state.showPersons;
         this.setState({showPersons: !this.state.showPersons});
@@ -60,8 +77,8 @@ class App extends Component {
             personsView = (
             <div>
                 {
-                    this.state.persons.map(person => {
-                        return <Person name = {person.name} age = {person.age}/>
+                    this.state.persons.map((person, index) => {
+                        return <Person name = {person.name} age = {person.age} clicked = {() => this.deletePerson(index)} key = {person.id} changed = {(event) => this.inputHandler(event, person.id)}/>
                     })
                 /* < button  style = {butStyle} onClick = {() => this.detailsHandeler("Name1", "Name2", "Name3")} > Change Details </button>
 

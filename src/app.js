@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import {useState} from "react";
 import './app.css';
 import Person from './Person/Person.js';
-import Radium from 'radium'
+import Radium, {StyleRoot} from 'radium';
 class App extends Component {
     state = {
         persons: [
@@ -112,7 +112,9 @@ class App extends Component {
         }
 
         return ( 
-        <div className = "App" >
+        //Wrapping Everything inside StyleRoot for "mdeia Queries" to work
+        <StyleRoot> 
+            <div className = "App" >
             <h1 > Hi I'm React</h1> 
             <p className = {dynamicClassName.join(" ")}>Dynamic Class Name and Styling</p>
             <button onClick = {this.toggleHandler} style = {butStyle}>Toggle Persons</button>
@@ -129,6 +131,8 @@ class App extends Component {
             } */}
             {personsView}
         </div>
+        </StyleRoot>
+        
         );
     }
 }

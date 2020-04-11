@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import {useState} from "react";
 import './app.css';
 import Person from './Person/Person.js';
+import Radium from 'radium'
 class App extends Component {
     state = {
         persons: [
@@ -65,12 +66,18 @@ class App extends Component {
     render() {
         //Inline CSS for Button
         const butStyle = {
-            backgroundColor: "blue",
+            backgroundColor: "green",
             font: 'inherit',
             border: '2px solid black',
             padding: '10px',
             cursor: 'pointer',
             margin: "20px auto",
+            cursor: 'pointer',
+            color: 'white',
+            ':hover': {
+                backgroundColor: 'lightgreen',
+                color: 'black'
+            }
         };
         let personsView = null;
         if (this.state.showPersons) {
@@ -80,6 +87,7 @@ class App extends Component {
                     this.state.persons.map((person, index) => {
                         return <Person name = {person.name} age = {person.age} clicked = {() => this.deletePerson(index)} key = {person.id} changed = {(event) => this.inputHandler(event, person.id)}/>
                     })
+                    
                 /* < button  style = {butStyle} onClick = {() => this.detailsHandeler("Name1", "Name2", "Name3")} > Change Details </button>
 
                 < Person name = {this.state.persons[0].name} age = {this.state.persons[0].age} changed ={this.inputHandler}/>
@@ -89,12 +97,25 @@ class App extends Component {
                 < Person name = {this.state.persons[2].name} age = {this.state.persons[2].age} /> */}                
             </div>
             )
+            butStyle.backgroundColor = "red";
+            butStyle[':hover'] = {
+                backgroundColor: 'salmon',
+                    color: 'black'
+            }
+        }
+        let dynamicClassName = []
+        if(this.state.persons.length <= 2) {
+            dynamicClassName.push('red') //dynamicClassName = ['red']
+        }
+        if (this.state.persons.length <= 1) {
+            dynamicClassName.push('bold') //dynamicClassName = ['red']
         }
 
         return ( 
         <div className = "App" >
             <h1 > Hi I'm React</h1> 
-            <button onClick = {this.toggleHandler}>Toggle Persons</button>
+            <p className = {dynamicClassName.join(" ")}>Dynamic Class Name and Styling</p>
+            <button onClick = {this.toggleHandler} style = {butStyle}>Toggle Persons</button>
             {/* {   this.state.showPersons ? //Ternary operator to toggle
                 <div>
                     < button  style = {butStyle} onClick = {() => this.detailsHandeler("Name1", "Name2", "Name3")} > Change Details </button>
@@ -111,7 +132,7 @@ class App extends Component {
         );
     }
 }
-export default App;
+export default Radium(App);
 
 //Use of Hooks for Functional Components
 /* const app = (props) => {

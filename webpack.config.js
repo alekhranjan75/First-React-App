@@ -30,7 +30,22 @@ module.exports = {
             {
                 // for any file with a suffix of css
                 test: /\.css$/,
-                use: ['style-loader', 'css-loader']
+                use: [
+                    'style-loader',
+                    {
+                        loader: 'css-loader',
+                        options: {
+                            importLoaders: 1,
+                            modules: {
+                                localIdentName: '[path][name]__[local]--[hash:base64:5]',
+                                exportGlobals: true,
+                                auto: true,
+                                context: path.resolve(__dirname, 'context'),
+                                hashPrefix: 'hash',
+                            }
+                        }
+                    }
+                ],
             }]
         },
         // add a custom index.html as the template

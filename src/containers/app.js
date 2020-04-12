@@ -12,7 +12,8 @@ class App extends Component {
             { id: "p3", name: "Maxmin", age: 30 }
         ],
         someOtherState: "Some Value",
-        showPersons: false
+        showPersons: false,
+        changeCounter: 0
     }
 
     detailsHandeler = (p1, p2, p3) => {
@@ -57,7 +58,13 @@ class App extends Component {
         //Updating the value in the new array
         persons[personIndex] = person
 
-        this.setState({persons: persons })
+        this.setState((prevState, props) => {
+            return {
+                persons: persons,
+                changeCounter: prevState.changeCounter + 1
+            }
+        })
+        // console.log(this.state.changeCounter)
     }
 
     toggleHandler = () => {

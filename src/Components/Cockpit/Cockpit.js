@@ -1,7 +1,11 @@
-import React from 'react';
+import React, {useEffect, useRef} from 'react';
 import Radium from 'radium';
 
 const cockpit = (props) => {
+    const toggleBtnRef = useRef(null);
+    useEffect(() => {
+        toggleBtnRef.current.click();
+    }, [] )
     const btnStyle = {
         backgroundColor: 'green',
         font: 'inherit',
@@ -36,7 +40,7 @@ const cockpit = (props) => {
     <div>
         <h1 > {props.title}</h1> 
         <p className = {dynamicClassName.join(" ")}>Dynamic Class Name and Styling</p>
-        <button  className = "btn" onClick = {props.toggle} style = {btnStyle}>Toggle Persons</button>
+        <button  ref = {toggleBtnRef} className = "btn" onClick = {props.toggle} style = {btnStyle}>Toggle Persons</button>
     </div>
     )
 }

@@ -3,6 +3,7 @@ import './app.css';
 import Persons from '../Components/Persons/Persons.js';
 import Cockpit from '../Components/Cockpit/Cockpit';
 import Radium, {StyleRoot} from 'radium';
+import AuthContext from '../Context/auth-Context';
 
 class App extends Component {
     state = {
@@ -13,7 +14,8 @@ class App extends Component {
         ],
         someOtherState: "Some Value",
         showPersons: false,
-        changeCounter: 0
+        changeCounter: 0,
+        authenticated: false
     }
 
     detailsHandeler = (p1, p2, p3) => {
@@ -71,6 +73,12 @@ class App extends Component {
         // const doesShow = this.state.showPersons;
         this.setState({showPersons: !this.state.showPersons});
     }
+
+    loginHandler = () => {
+        this.setState ({
+            authenticated: !this.state.authenticated
+        })
+    }
     render() {
         let personsView = null;
         if (this.state.showPersons) {
@@ -85,16 +93,18 @@ class App extends Component {
         return ( 
         //Wrapping Everything inside StyleRoot for "mdeia Queries" to
         <StyleRoot> 
-            <div className = "App" >
+            <AuthContext.Provider value = {{authenticated: this.state.authenticated, login: this.loginHandler}}>
+                <div className = "App" >
                 < Cockpit 
                     title = {this.props.appName}
                     showPersons = {this.state.showPersons}
                     toggle = {this.toggleHandler} 
                     persons = {this.state.persons}
-                    // Style = {butStyle}
                 />
                 {personsView}
             </div>
+            </AuthContext.Provider>
+            
         </StyleRoot>
         
         );

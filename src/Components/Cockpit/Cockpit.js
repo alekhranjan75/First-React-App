@@ -1,6 +1,6 @@
 import React, {useEffect, useRef} from 'react';
 import Radium from 'radium';
-
+import AuthContext from "../../Context/auth-Context";
 const cockpit = (props) => {
     const toggleBtnRef = useRef(null);
     useEffect(() => {
@@ -41,6 +41,10 @@ const cockpit = (props) => {
         <h1 > {props.title}</h1> 
         <p className = {dynamicClassName.join(" ")}>Dynamic Class Name and Styling</p>
         <button  ref = {toggleBtnRef} className = "btn" onClick = {props.toggle} style = {btnStyle}>Toggle Persons</button>
+        <AuthContext.Consumer>
+            {value => <button onClick = {value.login }> Log in </button>}           
+        </AuthContext.Consumer>
+
     </div>
     )
 }
